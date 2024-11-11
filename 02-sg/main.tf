@@ -1,14 +1,13 @@
 module "vpn" {
-  common_tags = var.common_tags
   source         = "git::https://github.com/Vigneshnalla/terraform-aws-securitygroup.git?ref=main"
-  project_name   = var.project_name
-  environment    = var.environment
-  sg_description = "SG for VPN"
-  vpc_id         = data.aws_vpc.default.id
-  sg_name        = "vpn"
-  #sg_ingress_rules = var.mongodb_sg_ingress_rules
+  project_name = var.project_name
+  environment = var.environment
+  sg_description = "SG for VPN Instances"
+  vpc_id = data.aws_ssm_parameter.vpc_id.value
+  common_tags = var.common_tags
+  sg_name = "vpn"
+  ingress_rules = var.vpn_sg_rules
 }
-
 module "mongodb" {
   common_tags = var.common_tags
   source         = "git::https://github.com/Vigneshnalla/terraform-aws-securitygroup.git?ref=main"
